@@ -23,6 +23,29 @@ class App extends Component{
                 console.log('getData', this.state.getData)
             }
         )
+
+        let payload = {
+            userId: 19,
+            id: 12,
+            title: "post data inserted ",
+            body:"rushi"
+        };
+
+        axios.post("https://jsonplaceholder.typicode.com/posts", payload).then(
+            RES => {
+                console.log('post call')
+                this.setState({data : RES.data })
+                console.log('RES POST', JSON.stringify(this.state.data))
+            }
+        )
+
+        axios.delete("https://jsonplaceholder.typicode.com/posts").then(
+            res => {
+                this.setState({data : res.data}).filter(item => item.id === "1")
+                console.log("delete", this.state.data)
+            }
+        )
+
     }
 
     render(){
@@ -38,6 +61,16 @@ class App extends Component{
                       <span className="right">{"Body : " + this.state.getData[key].body}</span>
                     </div>
                 ))}
+
+                {Object.keys(this.state.data).map((key) => (
+                    <div className="container">
+                        <hr/>
+                        <label> Post call data </label>
+                        <span className="left">{key}</span>
+                        <span className="right">{":  "+ this.state.data[key]}</span>
+                    </div>
+                ))}
+
             </div>
         )
     }
